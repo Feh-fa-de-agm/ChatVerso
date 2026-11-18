@@ -1,1 +1,12 @@
-.
+
+{
+  "name": "ChatVerso",
+  "short_name": "ChatVerso",
+  "description": "Seu organizador pessoal de ideias",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#100d18",
+  "theme_color": "#171222"
+}
