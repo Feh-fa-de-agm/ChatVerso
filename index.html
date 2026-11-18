@@ -1,1 +1,196 @@
-.
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#171222">
+  <meta name="description" content="Seu organizador pessoal de ideias.">
+  <title>ChatVerso</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">✦</div>
+      <div>
+        <h1>ChatVerso</h1>
+        <small>Seu universo de ideias</small>
+      </div>
+    </div>
+    <button class="icon-btn" id="backupButton" title="Backup">↥</button>
+  </header>
+
+  <main>
+    <section id="homePage" class="page active">
+      <div class="welcome">
+        <span class="eyebrow">SEU ESPAÇO CRIATIVO</span>
+        <h2>Suas ideias merecem<br>um lugar especial.</h2>
+        <p>Guarde, organize e desenvolva suas ideias.</p>
+        <button class="primary-btn" data-action="new-idea">＋ Nova ideia</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat-card">
+          <span>Ideias</span>
+          <strong id="ideaCount">0</strong>
+        </div>
+        <div class="stat-card">
+          <span>Projetos</span>
+          <strong id="projectCount">0</strong>
+        </div>
+      </div>
+
+      <div class="section-heading">
+        <h3>Ideias recentes</h3>
+        <button class="text-btn" data-page="ideasPage">Ver todas</button>
+      </div>
+      <div id="recentIdeas" class="idea-list"></div>
+    </section>
+
+    <section id="ideasPage" class="page">
+      <div class="page-heading">
+        <span class="eyebrow">SEU ARQUIVO</span>
+        <h2>Minhas ideias</h2>
+        <p>Todas as suas ideias em um só lugar.</p>
+      </div>
+
+      <button class="primary-btn full" data-action="new-idea">＋ Adicionar ideia</button>
+
+      <input id="searchInput" class="search-input"
+        type="search" placeholder="⌕ Pesquisar ideias...">
+
+      <select id="categoryFilter" class="field">
+        <option value="">Todas as categorias</option>
+        <option>Aplicativos</option>
+        <option>Jogos</option>
+        <option>Vídeos</option>
+        <option>Shorts</option>
+        <option>Animaverso</option>
+        <option>Outros</option>
+      </select>
+
+      <div id="allIdeas" class="idea-list"></div>
+    </section>
+
+    <section id="projectsPage" class="page">
+      <div class="page-heading">
+        <span class="eyebrow">SEUS PLANOS</span>
+        <h2>Meus projetos</h2>
+        <p>Transforme ideias em projetos.</p>
+      </div>
+      <button class="primary-btn full" data-action="new-project">＋ Novo projeto</button>
+      <div id="allProjects" class="project-list"></div>
+    </section>
+
+    <section id="settingsPage" class="page">
+      <div class="page-heading">
+        <span class="eyebrow">PERSONALIZAÇÃO</span>
+        <h2>Configurações</h2>
+        <p>Cuide do seu universo criativo.</p>
+      </div>
+
+      <div class="settings-card">
+        <h3>Armazenamento</h3>
+        <p>Suas informações são guardadas neste dispositivo.</p>
+        <button class="secondary-btn full" id="exportButton">Exportar backup</button>
+        <button class="secondary-btn full" id="importButton">Restaurar backup</button>
+        <input type="file" id="importFile" accept=".json,application/json" hidden>
+      </div>
+
+      <div class="settings-card">
+        <h3>Sobre</h3>
+        <p><strong>ChatVerso 1.0</strong></p>
+        <p>Seu universo pessoal de ideias.</p>
+        <p class="muted">Feito para guardar aquilo que você ainda vai criar.</p>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-page="homePage">
+      <span>⌂</span><small>Início</small>
+    </button>
+    <button class="nav-btn" data-page="ideasPage">
+      <span>✧</span><small>Ideias</small>
+    </button>
+    <button class="nav-btn" data-page="projectsPage">
+      <span>▣</span><small>Projetos</small>
+    </button>
+    <button class="nav-btn" data-page="settingsPage">
+      <span>⚙</span><small>Ajustes</small>
+    </button>
+  </nav>
+
+  <dialog id="ideaDialog">
+    <form id="ideaForm">
+      <div class="dialog-heading">
+        <h2 id="ideaDialogTitle">Nova ideia</h2>
+        <button type="button" class="close-btn" data-close="ideaDialog">×</button>
+      </div>
+
+      <input type="hidden" id="ideaId">
+
+      <label for="ideaTitle">Nome da ideia</label>
+      <input class="field" id="ideaTitle" maxlength="100"
+        placeholder="Ex.: Um novo aplicativo" required>
+
+      <label for="ideaDescription">Descrição</label>
+      <textarea class="field" id="ideaDescription" rows="5"
+        placeholder="Escreva tudo o que está imaginando..."></textarea>
+
+      <label for="ideaCategory">Categoria</label>
+      <select class="field" id="ideaCategory">
+        <option>Aplicativos</option>
+        <option>Jogos</option>
+        <option>Vídeos</option>
+        <option>Shorts</option>
+        <option>Animaverso</option>
+        <option>Outros</option>
+      </select>
+
+      <label for="ideaProject">Projeto relacionado</label>
+      <select class="field" id="ideaProject">
+        <option value="">Nenhum projeto</option>
+      </select>
+
+      <button class="primary-btn full" type="submit">Salvar ideia</button>
+    </form>
+  </dialog>
+
+  <dialog id="projectDialog">
+    <form id="projectForm">
+      <div class="dialog-heading">
+        <h2 id="projectDialogTitle">Novo projeto</h2>
+        <button type="button" class="close-btn" data-close="projectDialog">×</button>
+      </div>
+
+      <input type="hidden" id="projectId">
+
+      <label for="projectName">Nome do projeto</label>
+      <input class="field" id="projectName" maxlength="100"
+        placeholder="Nome do projeto" required>
+
+      <label for="projectDescription">Descrição</label>
+      <textarea class="field" id="projectDescription" rows="4"
+        placeholder="Sobre o que é esse projeto?"></textarea>
+
+      <label for="projectStatus">Situação</label>
+      <select class="field" id="projectStatus">
+        <option>Planejamento</option>
+        <option>Em desenvolvimento</option>
+        <option>Concluído</option>
+        <option>Pausado</option>
+      </select>
+
+      <button class="primary-btn full" type="submit">Salvar projeto</button>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
